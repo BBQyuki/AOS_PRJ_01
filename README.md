@@ -1,9 +1,8 @@
 # AOS_PRJ_01
 This is the first academic project from course Advanced Operating System
-
 Here is the project discription:
 
-This project has two parts:
+### This project has two parts:
 1. Implement causally ordered broadcasting.
 2. Implement causally ordered multicasting.
 
@@ -13,15 +12,13 @@ This is an individual project and you are expected to demonstrate its operation 
 1. There are ten nodes in the system, numbered from 0 to 9. Each node executes on a different machine. You can choose the machines from the machines set aside for network programming (dc01; dc02; : : : ; dc45). Each node must execute on a different machine.
 2. There are reliable socket connections (TCP) between each pair of nodes. All messages are sent over these connections.
 3. Each node repeatedly goes through the following sequence of operations until each node has sent one hundred messages. In the case of broadcast communication, sending one copy of the message to all the nodes counts as sending one message. In the case of multicast communication, sending one copy of the message to all the destination nodes counts as sending one message.
-	(a) Waits for a period of time that is uniformly distributed in the range [20, 100] milliseconds before sending a message.
-	(b) In the case of causally ordered broadcast, identical messages are sent to all the nodes. In the case of causally ordered multicast perform the following operations:
-	```
-		i. Randomly select an integer, x, that is in the range [1,9].
-		ii. Randomly select x nodes (other than itself) as destinations for the multicast.
-		iii. Send identical messages to the x selected destinations.
+	1. Waits for a period of time that is uniformly distributed in the range [20, 100] milliseconds before sending a message.
+	2. In the case of causally ordered broadcast, identical messages are sent to all the nodes. In the case of causally ordered multicast perform the following operations:
+		* Randomly select an integer, x, that is in the range [1,9].
+		* Randomly select x nodes (other than itself) as destinations for the multicast.
+		* Send identical messages to the x selected destinations.
 The message contains physical clock value of the sending process, along with the causal dependency information you may need to send to ensure causally ordered delivery. The physical clock value can be obtained using an appropriate system call.
-	```
-	(c) When a node receives a message, the node lets a period of time, t, to elapse before inspecting its vector/matrix to make delivery decision. The value of t is uniformly distributed in the range [50, 200] milliseconds and is used to mimic channel delays through a network of geographically distant nodes. However, you may encounter a situation where a later message sent along a channel is inspected before an earlier message sent along the same channel (TCP connection). If you have implemented the logic correctly then it will not be a problem because the later message can only be delivered after its causal predecessor, the earlier message sent along the same channel, is delivered.
+	3.When a node receives a message, the node lets a period of time, t, to elapse before inspecting its vector/matrix to make delivery decision. The value of t is uniformly distributed in the range [50, 200] milliseconds and is used to mimic channel delays through a network of geographically distant nodes. However, you may encounter a situation where a later message sent along a channel is inspected before an earlier message sent along the same channel (TCP connection). If you have implemented the logic correctly then it will not be a problem because the later message can only be delivered after its causal predecessor, the earlier message sent along the same channel, is delivered.
 4. Once a node has sent one hundred messages, it does not make any more attempt to send messages, and sends a completion notification to node 0.
 5. Node 0 brings the entire distributed computation to an end once its has received completion notification from all the nodes, including itself.
 
